@@ -1,0 +1,24 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# JetBrains IDE
+.idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Ruff cache
+.ruff_cache
+
+# Virtual environments
+.venv
+
+# Archives
+.zip
+.rar

@@ -1,7 +1,6 @@
 start_date: "2015-01-01"
 
 portfolio_1:
-  # Веса не указаны - будут рассчитаны на основе капитализации
   'ROSN': null
   'SBER': null
   'GAZP': null
@@ -16,16 +15,15 @@ portfolio_1:
   'TRNFP': null
 
 portfolio_2:
-  # Веса указаны явно
-  'YNDX': 0.15  # Яндекс - IT-компания
-  'OZON': 0.10  # Ozon - e-commerce
-  'TCSG': 0.12  # TCS Group (Тинькофф) - банковские услуги
-  'QIWI': 0.05  # QIWI - платежные системы
-  'LKOH': 0.15  # Лукойл - нефтегазовая компания
-  'NVTK': 0.10  # НОВАТЭК - газодобыча
-  'MAGN': 0.08  # Магнит - розничная торговля
-  'DSKY': 0.05  # Детский мир - розничная торговля
-  'FIVE': 0.08  # X5 Retail Group - розничная торговля
-  'CHMF': 0.06  # Северсталь - металлургия
-  'NLMK': 0.04  # НЛМК - металлургия
-  'GMKN': 0.02  # Норникель - горнодобыча
+  'YNDX': null
+  'OZON': null
+  'TCSG': null
+  'QIWI': null
+  'LKOH': null
+  'NVTK': null
+  'MAGN': null
+  'DSKY': null
+  'FIVE': null
+  'CHMF': null
+  'NLMK': null
+  'GMKN': null

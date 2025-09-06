@@ -55,7 +55,7 @@ class QuotationsProcessor:
 
     def get_portfolio_quotations(self, portfolio_name: str) -> Dict[str, pd.DataFrame]:
         """
-        Get quotations for a specific portfolio.
+        Get quotations for a specific portfolio using multithreaded loading for better performance.
 
         Args:
             portfolio_name (str): Name of the portfolio (e.g., 'portfolio_1', 'portfolio_2').
@@ -67,36 +67,39 @@ class QuotationsProcessor:
             logger.error(f"Portfolio '{portfolio_name}' not found")
             return {}
 
-        tickers = self.portfolios[portfolio_name]
-        logger.info(f"Loading quotations for portfolio '{portfolio_name}' with {len(tickers)} tickers")
+        tickers = self.config.get_portfolio_tickers(portfolio_name)
+        logger.info(f"Loading quotations for portfolio '{portfolio_name}' with {len(tickers)} tickers using multithreaded approach")
 
-        quotations_dict = {}
-
-        for ticker in tickers:
-            try:
-                # Load data using the correct method with start date from config
-                start_date = pd.to_datetime(self.start_date)
-                end_date = pd.Timestamp.today()
-                
-                ticker_data = self.moex_loader.load_ticker_data(
-                    ticker=ticker,
-                    start_date=start_date,
-                    end_date=end_date,
-                    period=24  # Daily data
-                )
-
+        try:
+            # Use multithreaded loading for better performance
+            start_date = pd.to_datetime(self.start_date)
+            end_date = pd.Timestamp.today()
+            
+            # Load all tickers concurrently
+            raw_quotations_dict = self.moex_loader.load_all_tickers(
+                tickers=tickers,
+                start_date=start_date,
+                end_date=end_date,
+                period=24,  # Daily data
+                max_workers=30  # Use 30 threads for concurrent loading
+            )
+            
+            # Process the loaded data
+            quotations_dict = {}
+            for ticker, ticker_data in raw_quotations_dict.items():
                 if ticker_data is not None and not ticker_data.empty:
                     processed_df = self._process_dataframe(ticker_data, ticker)
                     quotations_dict[ticker] = processed_df
-                    logger.info(f"Successfully loaded data for {ticker}: {len(processed_df)} records")
+                    logger.info(f"Successfully processed data for {ticker}: {len(processed_df)} records")
                 else:
                     logger.warning(f"No data available for ticker {ticker}")
 
-            except Exception as e:
-                logger.error(f"Error loading data for ticker {ticker}: {e}")
-
-        logger.info(f"Successfully loaded quotations for {len(quotations_dict)} out of {len(tickers)} tickers in portfolio '{portfolio_name}'")
-        return quotations_dict
+            logger.info(f"Successfully loaded quotations for {len(quotations_dict)} out of {len(tickers)} tickers in portfolio '{portfolio_name}'")
+            return quotations_dict
+            
+        except Exception as e:
+            logger.error(f"Error loading data for portfolio '{portfolio_name}': {e}")
+            return {}
 
     def get_all_portfolios_quotations(self) -> Dict[str, Dict[str, pd.DataFrame]]:
         """

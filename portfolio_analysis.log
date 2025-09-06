@@ -1,0 +1,175 @@
+2025-09-06 19:55:45.550 | INFO     | __main__:main:17 - Starting portfolio analysis...
+2025-09-06 19:55:45.551 | INFO     | __main__:main:20 - ============================================================
+2025-09-06 19:55:45.551 | INFO     | __main__:main:21 - STEP 1: CALCULATING PORTFOLIO WEIGHTS
+2025-09-06 19:55:45.552 | INFO     | __main__:main:22 - ============================================================
+2025-09-06 19:55:45.552 | INFO     | src.config:__init__:21 - Start checking for validity of paths to configuration files.
+2025-09-06 19:55:45.552 | INFO     | src.config:__init__:24 - All file paths have been validated successfully.
+2025-09-06 19:55:45.557 | INFO     | src.config:_load_tickers_data:46 - Successfully loaded tickers data from YAML file
+2025-09-06 19:55:45.557 | INFO     | src.config:get_portfolios:65 - Retrieved 2 portfolios
+2025-09-06 19:55:45.557 | INFO     | src.creating_portfolio.calculate_weights_portfolio:__init__:22 - Loading market capitalization data...
+2025-09-06 19:55:47.082 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_all_portfolios_weights:143 - Calculating weights for all portfolios
+2025-09-06 19:55:47.082 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_portfolio_weights:49 - Calculating weights based on market capitalization for portfolio 'portfolio_1'
+2025-09-06 19:55:47.082 | INFO     | src.config:get_portfolio_tickers:102 - Retrieved 12 tickers for portfolio 'portfolio_1'
+2025-09-06 19:55:47.082 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_calculate_capitalization_weights:108 - Calculating capitalization-based weights for portfolio 'portfolio_1' with 12 tickers
+2025-09-06 19:55:47.087 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_calculate_capitalization_weights:130 - Portfolio 'portfolio_1' weights calculated: 12 tickers
+2025-09-06 19:55:47.087 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_calculate_capitalization_weights:131 - Total portfolio capitalization: 20,580,043,405,554 rub.
+2025-09-06 19:55:47.087 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_portfolio_weights:45 - Using predefined weights for portfolio 'portfolio_2'
+2025-09-06 19:55:47.087 | INFO     | src.config:get_portfolio_tickers:102 - Retrieved 12 tickers for portfolio 'portfolio_2'
+2025-09-06 19:55:47.087 | INFO     | src.config:get_portfolio_weights:127 - Retrieved 12 weights for portfolio 'portfolio_2'
+2025-09-06 19:55:47.087 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_validate_and_normalize_weights:89 - Portfolio 'portfolio_2' weights normalized: 12 tickers
+2025-09-06 19:55:47.088 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_validate_and_normalize_weights:90 - Total weight before normalization: 1.0000
+2025-09-06 19:55:47.088 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_all_portfolios_weights:154 - Successfully calculated weights for 2 portfolios
+2025-09-06 19:55:47.089 | INFO     | __main__:main:31 - ============================================================
+2025-09-06 19:55:47.089 | INFO     | __main__:main:32 - STEP 2: DOWNLOADING QUOTATIONS
+2025-09-06 19:55:47.089 | INFO     | __main__:main:33 - ============================================================
+2025-09-06 19:55:47.090 | INFO     | src.config:__init__:21 - Start checking for validity of paths to configuration files.
+2025-09-06 19:55:47.090 | INFO     | src.config:__init__:24 - All file paths have been validated successfully.
+2025-09-06 19:55:47.093 | INFO     | src.config:_load_tickers_data:46 - Successfully loaded tickers data from YAML file
+2025-09-06 19:55:47.093 | INFO     | src.config:get_portfolios:65 - Retrieved 2 portfolios
+2025-09-06 19:55:47.096 | INFO     | src.config:get_start_date:176 - Retrieved start date: 2015-01-01
+2025-09-06 19:55:47.096 | INFO     | src.quotation_data:get_all_portfolios_quotations:109 - Loading quotations for all portfolios
+2025-09-06 19:55:47.096 | INFO     | src.quotation_data:get_portfolio_quotations:71 - Loading quotations for portfolio 'portfolio_1' with 12 tickers
+2025-09-06 19:55:52.706 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker ROSN from moexalgo
+2025-09-06 19:55:52.711 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker ROSN (from 2015-01-01)
+2025-09-06 19:55:52.711 | INFO     | src.quotation_data:get_portfolio_quotations:91 - Successfully loaded data for ROSN: 2722 records
+2025-09-06 20:00:34.557 | INFO     | __main__:main:17 - Starting portfolio analysis...
+2025-09-06 20:00:34.558 | INFO     | __main__:main:20 - ============================================================
+2025-09-06 20:00:34.558 | INFO     | __main__:main:21 - STEP 1: CALCULATING PORTFOLIO WEIGHTS
+2025-09-06 20:00:34.558 | INFO     | __main__:main:22 - ============================================================
+2025-09-06 20:00:34.558 | INFO     | src.config:__init__:21 - Start checking for validity of paths to configuration files.
+2025-09-06 20:00:34.558 | INFO     | src.config:__init__:24 - All file paths have been validated successfully.
+2025-09-06 20:00:34.561 | INFO     | src.config:_load_tickers_data:46 - Successfully loaded tickers data from YAML file
+2025-09-06 20:00:34.561 | INFO     | src.config:get_portfolios:65 - Retrieved 2 portfolios
+2025-09-06 20:00:34.561 | INFO     | src.creating_portfolio.calculate_weights_portfolio:__init__:22 - Loading market capitalization data...
+2025-09-06 20:00:35.747 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_all_portfolios_weights:143 - Calculating weights for all portfolios
+2025-09-06 20:00:35.748 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_portfolio_weights:49 - Calculating weights based on market capitalization for portfolio 'portfolio_1'
+2025-09-06 20:00:35.748 | INFO     | src.config:get_portfolio_tickers:102 - Retrieved 12 tickers for portfolio 'portfolio_1'
+2025-09-06 20:00:35.748 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_calculate_capitalization_weights:108 - Calculating capitalization-based weights for portfolio 'portfolio_1' with 12 tickers
+2025-09-06 20:00:35.752 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_calculate_capitalization_weights:130 - Portfolio 'portfolio_1' weights calculated: 12 tickers
+2025-09-06 20:00:35.752 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_calculate_capitalization_weights:131 - Total portfolio capitalization: 20,579,286,829,710 rub.
+2025-09-06 20:00:35.752 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_portfolio_weights:45 - Using predefined weights for portfolio 'portfolio_2'
+2025-09-06 20:00:35.752 | INFO     | src.config:get_portfolio_tickers:102 - Retrieved 12 tickers for portfolio 'portfolio_2'
+2025-09-06 20:00:35.752 | INFO     | src.config:get_portfolio_weights:127 - Retrieved 12 weights for portfolio 'portfolio_2'
+2025-09-06 20:00:35.752 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_validate_and_normalize_weights:89 - Portfolio 'portfolio_2' weights normalized: 12 tickers
+2025-09-06 20:00:35.758 | INFO     | src.creating_portfolio.calculate_weights_portfolio:_validate_and_normalize_weights:90 - Total weight before normalization: 1.0000
+2025-09-06 20:00:35.758 | INFO     | src.creating_portfolio.calculate_weights_portfolio:calculate_all_portfolios_weights:154 - Successfully calculated weights for 2 portfolios
+2025-09-06 20:00:35.759 | INFO     | __main__:main:31 - ============================================================
+2025-09-06 20:00:35.759 | INFO     | __main__:main:32 - STEP 2: DOWNLOADING QUOTATIONS
+2025-09-06 20:00:35.759 | INFO     | __main__:main:33 - ============================================================
+2025-09-06 20:00:35.759 | INFO     | src.config:__init__:21 - Start checking for validity of paths to configuration files.
+2025-09-06 20:00:35.759 | INFO     | src.config:__init__:24 - All file paths have been validated successfully.
+2025-09-06 20:00:35.763 | INFO     | src.config:_load_tickers_data:46 - Successfully loaded tickers data from YAML file
+2025-09-06 20:00:35.763 | INFO     | src.config:get_portfolios:65 - Retrieved 2 portfolios
+2025-09-06 20:00:35.766 | INFO     | src.config:get_start_date:176 - Retrieved start date: 2015-01-01
+2025-09-06 20:00:35.766 | INFO     | src.quotation_data:get_all_portfolios_quotations:112 - Loading quotations for all portfolios
+2025-09-06 20:00:35.766 | INFO     | src.config:get_portfolio_tickers:102 - Retrieved 12 tickers for portfolio 'portfolio_1'
+2025-09-06 20:00:35.766 | INFO     | src.quotation_data:get_portfolio_quotations:71 - Loading quotations for portfolio 'portfolio_1' with 12 tickers using multithreaded approach
+2025-09-06 20:00:46.833 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker RTKM from moexalgo
+2025-09-06 20:00:46.834 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker RTKM
+2025-09-06 20:00:47.128 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker ALRS from moexalgo
+2025-09-06 20:00:47.129 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker ALRS
+2025-09-06 20:00:47.627 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker IRAO from moexalgo
+2025-09-06 20:00:47.627 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker IRAO
+2025-09-06 20:00:47.833 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker GAZP from moexalgo
+2025-09-06 20:00:47.833 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker GAZP
+2025-09-06 20:00:48.226 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker SBER from moexalgo
+2025-09-06 20:00:48.226 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker SBER
+2025-09-06 20:00:48.328 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker ROSN from moexalgo
+2025-09-06 20:00:48.328 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker ROSN
+2025-09-06 20:00:48.541 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker SIBN from moexalgo
+2025-09-06 20:00:48.541 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker SIBN
+2025-09-06 20:00:48.730 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker TRNFP from moexalgo
+2025-09-06 20:00:48.731 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker TRNFP
+2025-09-06 20:00:48.830 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker TATN from moexalgo
+2025-09-06 20:00:48.830 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker TATN
+2025-09-06 20:00:48.933 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker AFLT from moexalgo
+2025-09-06 20:00:48.934 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker AFLT
+2025-09-06 20:00:49.027 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker VTBR from moexalgo
+2025-09-06 20:00:49.027 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker VTBR
+2025-09-06 20:00:49.137 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker HYDR from moexalgo
+2025-09-06 20:00:49.137 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker HYDR
+2025-09-06 20:00:49.138 | INFO     | src.loading_quotations.moex:load_all_tickers:330 - Successfully loaded data for 12 tickers: ['RTKM', 'ALRS', 'IRAO', 'GAZP', 'SBER', 'ROSN', 'SIBN', 'TRNFP', 'TATN', 'AFLT', 'VTBR', 'HYDR']
+2025-09-06 20:00:49.145 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker RTKM (from 2015-01-01)
+2025-09-06 20:00:49.145 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for RTKM: 2722 records
+2025-09-06 20:00:49.150 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker ALRS (from 2015-01-01)
+2025-09-06 20:00:49.150 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for ALRS: 2722 records
+2025-09-06 20:00:49.154 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2710 trading days for ticker IRAO (from 2015-01-01)
+2025-09-06 20:00:49.154 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for IRAO: 2710 records
+2025-09-06 20:00:49.159 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker GAZP (from 2015-01-01)
+2025-09-06 20:00:49.159 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for GAZP: 2722 records
+2025-09-06 20:00:49.163 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker SBER (from 2015-01-01)
+2025-09-06 20:00:49.163 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for SBER: 2722 records
+2025-09-06 20:00:49.168 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker ROSN (from 2015-01-01)
+2025-09-06 20:00:49.168 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for ROSN: 2722 records
+2025-09-06 20:00:49.172 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2716 trading days for ticker SIBN (from 2015-01-01)
+2025-09-06 20:00:49.172 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for SIBN: 2716 records
+2025-09-06 20:00:49.177 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2718 trading days for ticker TRNFP (from 2015-01-01)
+2025-09-06 20:00:49.177 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for TRNFP: 2718 records
+2025-09-06 20:00:49.181 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2720 trading days for ticker TATN (from 2015-01-01)
+2025-09-06 20:00:49.181 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for TATN: 2720 records
+2025-09-06 20:00:49.186 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker AFLT (from 2015-01-01)
+2025-09-06 20:00:49.186 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for AFLT: 2722 records
+2025-09-06 20:00:49.190 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2718 trading days for ticker VTBR (from 2015-01-01)
+2025-09-06 20:00:49.191 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for VTBR: 2718 records
+2025-09-06 20:00:49.195 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker HYDR (from 2015-01-01)
+2025-09-06 20:00:49.195 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for HYDR: 2722 records
+2025-09-06 20:00:49.195 | INFO     | src.quotation_data:get_portfolio_quotations:97 - Successfully loaded quotations for 12 out of 12 tickers in portfolio 'portfolio_1'
+2025-09-06 20:00:49.195 | INFO     | src.config:get_portfolio_tickers:102 - Retrieved 12 tickers for portfolio 'portfolio_2'
+2025-09-06 20:00:49.195 | INFO     | src.quotation_data:get_portfolio_quotations:71 - Loading quotations for portfolio 'portfolio_2' with 12 tickers using multithreaded approach
+2025-09-06 20:00:56.305 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker OZON from moexalgo
+2025-09-06 20:00:56.305 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker OZON
+2025-09-06 20:00:57.017 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker TCSG from moexalgo
+2025-09-06 20:00:57.017 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker TCSG
+2025-09-06 20:00:59.470 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker MAGN from moexalgo
+2025-09-06 20:00:59.470 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker MAGN
+2025-09-06 20:00:59.635 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker DSKY from moexalgo
+2025-09-06 20:00:59.635 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker DSKY
+2025-09-06 20:00:59.715 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker FIVE from moexalgo
+2025-09-06 20:00:59.716 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker FIVE
+2025-09-06 20:01:00.409 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker NVTK from moexalgo
+2025-09-06 20:01:00.410 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker NVTK
+2025-09-06 20:01:00.606 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker CHMF from moexalgo
+2025-09-06 20:01:00.607 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker CHMF
+2025-09-06 20:01:00.907 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker GMKN from moexalgo
+2025-09-06 20:01:00.907 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker GMKN
+2025-09-06 20:01:01.011 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker NLMK from moexalgo
+2025-09-06 20:01:01.011 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker NLMK
+2025-09-06 20:01:01.106 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker YNDX from moexalgo
+2025-09-06 20:01:01.107 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker YNDX
+2025-09-06 20:01:01.211 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker QIWI from moexalgo
+2025-09-06 20:01:01.212 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker QIWI
+2025-09-06 20:01:01.312 | INFO     | src.loading_quotations.moex:load_ticker_data:238 - Successfully loaded data for ticker LKOH from moexalgo
+2025-09-06 20:01:01.313 | INFO     | src.loading_quotations.moex:load_all_tickers:318 - Successfully downloaded data for ticker LKOH
+2025-09-06 20:01:01.314 | INFO     | src.loading_quotations.moex:load_all_tickers:330 - Successfully loaded data for 12 tickers: ['OZON', 'TCSG', 'MAGN', 'DSKY', 'FIVE', 'NVTK', 'CHMF', 'GMKN', 'NLMK', 'YNDX', 'QIWI', 'LKOH']
+2025-09-06 20:01:01.317 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 1195 trading days for ticker OZON (from 2015-01-01)
+2025-09-06 20:01:01.317 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for OZON: 1195 records
+2025-09-06 20:01:01.320 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 1248 trading days for ticker TCSG (from 2015-01-01)
+2025-09-06 20:01:01.320 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for TCSG: 1248 records
+2025-09-06 20:01:01.324 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker MAGN (from 2015-01-01)
+2025-09-06 20:01:01.324 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for MAGN: 2722 records
+2025-09-06 20:01:01.327 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 1782 trading days for ticker DSKY (from 2015-01-01)
+2025-09-06 20:01:01.327 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for DSKY: 1782 records
+2025-09-06 20:01:01.330 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 1540 trading days for ticker FIVE (from 2015-01-01)
+2025-09-06 20:01:01.330 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for FIVE: 1540 records
+2025-09-06 20:01:01.335 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2720 trading days for ticker NVTK (from 2015-01-01)
+2025-09-06 20:01:01.335 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for NVTK: 2720 records
+2025-09-06 20:01:01.340 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker CHMF (from 2015-01-01)
+2025-09-06 20:01:01.340 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for CHMF: 2722 records
+2025-09-06 20:01:01.344 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2718 trading days for ticker GMKN (from 2015-01-01)
+2025-09-06 20:01:01.345 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for GMKN: 2718 records
+2025-09-06 20:01:01.349 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker NLMK (from 2015-01-01)
+2025-09-06 20:01:01.349 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for NLMK: 2722 records
+2025-09-06 20:01:01.353 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2364 trading days for ticker YNDX (from 2015-01-01)
+2025-09-06 20:01:01.353 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for YNDX: 2364 records
+2025-09-06 20:01:01.357 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2672 trading days for ticker QIWI (from 2015-01-01)
+2025-09-06 20:01:01.358 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for QIWI: 2672 records
+2025-09-06 20:01:01.363 | INFO     | src.quotation_data:_process_dataframe:53 - Processed 2722 trading days for ticker LKOH (from 2015-01-01)
+2025-09-06 20:01:01.363 | INFO     | src.quotation_data:get_portfolio_quotations:93 - Successfully processed data for LKOH: 2722 records
+2025-09-06 20:01:01.363 | INFO     | src.quotation_data:get_portfolio_quotations:97 - Successfully loaded quotations for 12 out of 12 tickers in portfolio 'portfolio_2'
+2025-09-06 20:01:01.363 | INFO     | src.quotation_data:get_all_portfolios_quotations:120 - Successfully loaded quotations for 2 portfolios
+2025-09-06 20:01:01.363 | INFO     | __main__:main:42 - ============================================================
+2025-09-06 20:01:01.363 | INFO     | __main__:main:43 - STEP 3: CREATING ANALYSIS REPORT
+2025-09-06 20:01:01.364 | INFO     | __main__:main:44 - ============================================================
+2025-09-06 20:01:01.364 | INFO     | __main__:create_analysis_report:129 - Creating comprehensive analysis report...
+2025-09-06 20:01:01.374 | INFO     | __main__:create_analysis_report:164 - Analysis report saved to: portfolio_analysis_report_20250906_200101.csv
+2025-09-06 20:01:01.383 | INFO     | __main__:main:48 - Portfolio analysis completed successfully!

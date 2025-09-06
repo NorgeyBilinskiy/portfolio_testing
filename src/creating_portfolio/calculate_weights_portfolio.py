@@ -24,7 +24,11 @@ class IndexWeightsCalculator:
 
     def calculate_portfolio_weights(self, portfolio_name: str) -> Dict[str, float]:
         """
-        Calculate weights for a specific portfolio based on market capitalization
+        Calculate weights for a specific portfolio based on market capitalization or predefined weights
+        
+        Supports both simplified YAML format (ticker: weight/null) and legacy formats.
+        If weights are specified in YAML, they are validated and normalized.
+        If no weights are specified (null values), weights are calculated based on market capitalization.
         
         Args:
             portfolio_name (str): Name of the portfolio
@@ -36,8 +40,72 @@ class IndexWeightsCalculator:
             logger.error(f"Portfolio '{portfolio_name}' not found")
             return {}
 
-        tickers = self.portfolios[portfolio_name]
-        logger.info(f"Calculating weights for portfolio '{portfolio_name}' with {len(tickers)} tickers")
+        # Check if portfolio has predefined weights
+        if self.config.has_portfolio_weights(portfolio_name):
+            logger.info(f"Using predefined weights for portfolio '{portfolio_name}'")
+            return self._validate_and_normalize_weights(portfolio_name)
+        
+        # Calculate weights based on market capitalization
+        logger.info(f"Calculating weights based on market capitalization for portfolio '{portfolio_name}'")
+        return self._calculate_capitalization_weights(portfolio_name)
+    
+    def _validate_and_normalize_weights(self, portfolio_name: str) -> Dict[str, float]:
+        """
+        Validate and normalize predefined weights for a portfolio
+        
+        Args:
+            portfolio_name (str): Name of the portfolio
+            
+        Returns:
+            Dict[str, float]: Normalized weights
+        """
+        tickers = self.config.get_portfolio_tickers(portfolio_name)
+        weights = self.config.get_portfolio_weights(portfolio_name)
+        
+        if not weights:
+            logger.warning(f"No weights found for portfolio '{portfolio_name}'")
+            return {}
+        
+        # Validate that all tickers have weights
+        missing_tickers = set(tickers) - set(weights.keys())
+        if missing_tickers:
+            logger.error(f"Missing weights for tickers: {missing_tickers}")
+            return {}
+        
+        # Validate that all weights are positive
+        negative_weights = {ticker: weight for ticker, weight in weights.items() if weight < 0}
+        if negative_weights:
+            logger.error(f"Negative weights found: {negative_weights}")
+            return {}
+        
+        # Normalize weights to sum to 1.0
+        total_weight = sum(weights.values())
+        if total_weight == 0:
+            logger.error(f"Total weight is zero for portfolio '{portfolio_name}'")
+            return {}
+        
+        normalized_weights = {ticker: weight / total_weight for ticker, weight in weights.items()}
+        
+        logger.info(f"Portfolio '{portfolio_name}' weights normalized: {len(normalized_weights)} tickers")
+        logger.info(f"Total weight before normalization: {total_weight:.4f}")
+        
+        for ticker, weight in normalized_weights.items():
+            logger.debug(f"{ticker}: {weight:.4f} ({weight*100:.2f}%)")
+        
+        return normalized_weights
+    
+    def _calculate_capitalization_weights(self, portfolio_name: str) -> Dict[str, float]:
+        """
+        Calculate weights based on market capitalization
+        
+        Args:
+            portfolio_name (str): Name of the portfolio
+            
+        Returns:
+            Dict[str, float]: Dictionary with tickers as keys and weights as values
+        """
+        tickers = self.config.get_portfolio_tickers(portfolio_name)
+        logger.info(f"Calculating capitalization-based weights for portfolio '{portfolio_name}' with {len(tickers)} tickers")
 
         capitalizations = self.capitalization_loader.get_multiple_tickers_capitalization(tickers)
         
@@ -78,7 +146,10 @@ class IndexWeightsCalculator:
         
         for portfolio_name in self.portfolios.keys():
             portfolio_weights = self.calculate_portfolio_weights(portfolio_name)
-            all_weights[portfolio_name] = portfolio_weights
+            if portfolio_weights:  # Only add if weights were successfully calculated
+                all_weights[portfolio_name] = portfolio_weights
+            else:
+                logger.warning(f"Skipping portfolio '{portfolio_name}' due to calculation errors")
             
         logger.info(f"Successfully calculated weights for {len(all_weights)} portfolios")
         return all_weights

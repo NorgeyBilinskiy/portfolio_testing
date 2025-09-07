@@ -1,6 +1,7 @@
 import os
 import yaml
-from typing import Dict, List
+from typing import Dict, List, Optional
+from datetime import datetime
 
 from loguru import logger
 
@@ -23,164 +24,237 @@ class Config:
             FileValidator.validate_file_path(path)
         logger.info("All file paths have been validated successfully.")
         
-        # Load tickers data
+        # Загружаем данные о тикерах и ребалансировках
         self._tickers_data = self._load_tickers_data()
 
     def _load_tickers_data(self) -> Dict[str, Dict]:
         """
-        Load tickers data from YAML file
+        Загружает данные о тикерах и ребалансировках из YAML файла
         
         Returns:
-            Dict[str, Dict]: Dictionary with portfolio names as keys and portfolio data as values
+            Dict[str, Dict]: Словарь с именами портфелей как ключами и данными портфелей как значениями
         """
         try:
             with open(self.PATH_TO_VALIDATE["tickers_in_portfolio"], 'r', encoding='utf-8') as file:
                 data = yaml.safe_load(file)
                 
-                # Filter out non-portfolio keys (like start_date)
+                # Фильтруем ключи, не относящиеся к портфелям (например, start_date)
                 portfolios = {}
                 for k, v in data.items():
                     if k.startswith('portfolio_'):
                         portfolios[k] = v
                 
-                logger.info("Successfully loaded tickers data from YAML file")
+                logger.info("Успешно загружены данные о тикерах и ребалансировках из YAML файла")
                 return portfolios
         except FileNotFoundError:
-            logger.error(f"File not found: {self.PATH_TO_VALIDATE['tickers_in_portfolio']}")
+            logger.error(f"Файл не найден: {self.PATH_TO_VALIDATE['tickers_in_portfolio']}")
             return {}
         except yaml.YAMLError as e:
-            logger.error(f"Error parsing YAML file: {e}")
+            logger.error(f"Ошибка парсинга YAML файла: {e}")
             return {}
         except Exception as e:
-            logger.error(f"Unexpected error loading tickers data: {e}")
+            logger.error(f"Неожиданная ошибка при загрузке данных о тикерах: {e}")
             return {}
 
     def get_portfolios(self) -> Dict[str, Dict]:
         """
-        Get all portfolios with their data
+        Получает все портфели с их данными
         
         Returns:
-            Dict[str, Dict]: Dictionary with portfolio names as keys and portfolio data as values
+            Dict[str, Dict]: Словарь с именами портфелей как ключами и данными портфелей как значениями
         """
-        logger.info(f"Retrieved {len(self._tickers_data)} portfolios")
+        logger.info(f"Получено {len(self._tickers_data)} портфелей")
         return self._tickers_data.copy()
     
-    def get_portfolio_tickers(self, portfolio_name: str) -> List[str]:
+    def get_portfolio_rebalance_dates(self, portfolio_name: str) -> List[str]:
         """
-        Get tickers for a specific portfolio
+        Получает все даты ребалансировки для портфеля
         
         Args:
-            portfolio_name (str): Name of the portfolio
+            portfolio_name (str): Имя портфеля
             
         Returns:
-            List[str]: List of tickers for the portfolio
+            List[str]: Список дат ребалансировки в формате YYYY-MM-DD
         """
         if portfolio_name not in self._tickers_data:
-            logger.error(f"Portfolio '{portfolio_name}' not found")
+            logger.error(f"Портфель '{portfolio_name}' не найден")
+            return []
+        
+        portfolio_data = self._tickers_data[portfolio_name]
+        rebalance_dates = []
+        
+        # Ищем все ключи, начинающиеся с 'rebalance_date_'
+        for key, value in portfolio_data.items():
+            if key.startswith('rebalance_date_') and isinstance(value, dict) and 'date' in value:
+                rebalance_dates.append(value['date'])
+        
+        # Сортируем даты по возрастанию
+        rebalance_dates.sort()
+        
+        logger.info(f"Найдено {len(rebalance_dates)} дат ребалансировки для портфеля '{portfolio_name}'")
+        return rebalance_dates
+    
+    def get_portfolio_tickers_for_date(self, portfolio_name: str, target_date: str) -> List[str]:
+        """
+        Получает тикеры портфеля на определенную дату (с учетом ребалансировок)
+        
+        Args:
+            portfolio_name (str): Имя портфеля
+            target_date (str): Целевая дата в формате YYYY-MM-DD
+            
+        Returns:
+            List[str]: Список тикеров для указанной даты
+        """
+        if portfolio_name not in self._tickers_data:
+            logger.error(f"Портфель '{portfolio_name}' не найден")
             return []
         
         portfolio_data = self._tickers_data[portfolio_name]
         
-        # Check if it's new simplified format (dict with ticker: weight/null) or old format
-        if isinstance(portfolio_data, dict):
-            # New format: ticker -> weight/null
-            if all(isinstance(v, (int, float, type(None))) for v in portfolio_data.values()):
-                tickers = list(portfolio_data.keys())
-            # Old format with tickers key
-            elif 'tickers' in portfolio_data:
-                tickers = portfolio_data['tickers']
-            else:
-                logger.error(f"Invalid portfolio format for '{portfolio_name}'")
-                return []
-        elif isinstance(portfolio_data, list):
-            # Backward compatibility with old format
-            tickers = portfolio_data
-        else:
-            logger.error(f"Invalid portfolio format for '{portfolio_name}'")
+        # Находим актуальную ребалансировку для указанной даты
+        active_rebalance = self._get_active_rebalance_for_date(portfolio_data, target_date)
+        
+        if not active_rebalance:
+            logger.warning(f"Не найдена ребалансировка для портфеля '{portfolio_name}' на дату {target_date}")
             return []
         
-        logger.info(f"Retrieved {len(tickers)} tickers for portfolio '{portfolio_name}'")
+        tickers = list(active_rebalance.get('tickers', {}).keys())
+        logger.info(f"Получено {len(tickers)} тикеров для портфеля '{portfolio_name}' на дату {target_date}")
         return tickers
+    
+    def get_portfolio_weights_for_date(self, portfolio_name: str, target_date: str) -> Dict[str, float]:
+        """
+        Получает веса портфеля на определенную дату (с учетом ребалансировок)
+        
+        Args:
+            portfolio_name (str): Имя портфеля
+            target_date (str): Целевая дата в формате YYYY-MM-DD
+            
+        Returns:
+            Dict[str, float]: Словарь с тикерами как ключами и весами как значениями
+        """
+        if portfolio_name not in self._tickers_data:
+            logger.error(f"Портфель '{portfolio_name}' не найден")
+            return {}
+        
+        portfolio_data = self._tickers_data[portfolio_name]
+        
+        # Находим актуальную ребалансировку для указанной даты
+        active_rebalance = self._get_active_rebalance_for_date(portfolio_data, target_date)
+        
+        if not active_rebalance:
+            logger.warning(f"Не найдена ребалансировка для портфеля '{portfolio_name}' на дату {target_date}")
+            return {}
+        
+        weights = active_rebalance.get('tickers', {})
+        # Фильтруем None значения
+        weights = {ticker: weight for ticker, weight in weights.items() if weight is not None}
+        
+        if weights:
+            logger.info(f"Получено {len(weights)} весов для портфеля '{portfolio_name}' на дату {target_date}")
+        else:
+            logger.info(f"Веса не указаны для портфеля '{portfolio_name}' на дату {target_date} - будет использоваться расчет на основе капитализации")
+        
+        return weights
+    
+    def has_portfolio_weights_for_date(self, portfolio_name: str, target_date: str) -> bool:
+        """
+        Проверяет, есть ли указанные веса для портфеля на определенную дату
+        
+        Args:
+            portfolio_name (str): Имя портфеля
+            target_date (str): Целевая дата в формате YYYY-MM-DD
+            
+        Returns:
+            bool: True если веса указаны, False иначе
+        """
+        weights = self.get_portfolio_weights_for_date(portfolio_name, target_date)
+        return len(weights) > 0
+    
+    def _get_active_rebalance_for_date(self, portfolio_data: Dict, target_date: str) -> Optional[Dict]:
+        """
+        Находит активную ребалансировку для указанной даты
+        
+        Args:
+            portfolio_data (Dict): Данные портфеля
+            target_date (str): Целевая дата в формате YYYY-MM-DD
+            
+        Returns:
+            Optional[Dict]: Данные активной ребалансировки или None
+        """
+        target_dt = datetime.strptime(target_date, '%Y-%m-%d')
+        active_rebalance = None
+        active_date = None
+        
+        # Ищем все ребалансировки
+        for key, value in portfolio_data.items():
+            if key.startswith('rebalance_date_') and isinstance(value, dict) and 'date' in value:
+                rebalance_date = value['date']
+                rebalance_dt = datetime.strptime(rebalance_date, '%Y-%m-%d')
+                
+                # Если дата ребалансировки <= целевой даты и она самая поздняя из подходящих
+                if rebalance_dt <= target_dt and (active_date is None or rebalance_dt > active_date):
+                    active_rebalance = value
+                    active_date = rebalance_dt
+        
+        return active_rebalance
+
+    # Методы для обратной совместимости со старой структурой
+    def get_portfolio_tickers(self, portfolio_name: str) -> List[str]:
+        """
+        Получает тикеры портфеля (для обратной совместимости)
+        Использует первую доступную ребалансировку
+        
+        Args:
+            portfolio_name (str): Имя портфеля
+            
+        Returns:
+            List[str]: Список тикеров для портфеля
+        """
+        rebalance_dates = self.get_portfolio_rebalance_dates(portfolio_name)
+        if not rebalance_dates:
+            logger.error(f"Портфель '{portfolio_name}' не найден или не содержит ребалансировок")
+            return []
+        
+        # Используем первую дату ребалансировки
+        first_date = rebalance_dates[0]
+        return self.get_portfolio_tickers_for_date(portfolio_name, first_date)
     
     def get_portfolio_weights(self, portfolio_name: str) -> Dict[str, float]:
         """
-        Get weights for a specific portfolio
+        Получает веса портфеля (для обратной совместимости)
+        Использует первую доступную ребалансировку
         
         Args:
-            portfolio_name (str): Name of the portfolio
+            portfolio_name (str): Имя портфеля
             
         Returns:
-            Dict[str, float]: Dictionary with tickers as keys and weights as values, 
-                            empty dict if weights not specified
+            Dict[str, float]: Словарь с тикерами как ключами и весами как значениями
         """
-        if portfolio_name not in self._tickers_data:
-            logger.error(f"Portfolio '{portfolio_name}' not found")
+        rebalance_dates = self.get_portfolio_rebalance_dates(portfolio_name)
+        if not rebalance_dates:
+            logger.error(f"Портфель '{portfolio_name}' не найден или не содержит ребалансировок")
             return {}
         
-        portfolio_data = self._tickers_data[portfolio_name]
-        
-        # Check if it's new simplified format (dict with ticker: weight/null)
-        if isinstance(portfolio_data, dict) and all(isinstance(v, (int, float, type(None))) for v in portfolio_data.values()):
-            # Filter out null values (tickers without weights)
-            weights = {ticker: weight for ticker, weight in portfolio_data.items() if weight is not None}
-            if weights:
-                logger.info(f"Retrieved {len(weights)} weights for portfolio '{portfolio_name}'")
-                return weights
-            else:
-                logger.info(f"No weights specified for portfolio '{portfolio_name}' - will use capitalization-based calculation")
-                return {}
-        # Check if it's old format with weights key
-        elif isinstance(portfolio_data, dict) and 'weights' in portfolio_data:
-            weights = portfolio_data['weights']
-            logger.info(f"Retrieved {len(weights)} weights for portfolio '{portfolio_name}'")
-            return weights
-        else:
-            logger.info(f"No weights specified for portfolio '{portfolio_name}' - will use capitalization-based calculation")
-            return {}
+        # Используем первую дату ребалансировки
+        first_date = rebalance_dates[0]
+        return self.get_portfolio_weights_for_date(portfolio_name, first_date)
     
     def has_portfolio_weights(self, portfolio_name: str) -> bool:
         """
-        Check if portfolio has specified weights
+        Проверяет, есть ли указанные веса для портфеля (для обратной совместимости)
+        Использует первую доступную ребалансировку
         
         Args:
-            portfolio_name (str): Name of the portfolio
+            portfolio_name (str): Имя портфеля
             
         Returns:
-            bool: True if weights are specified, False otherwise
+            bool: True если веса указаны, False иначе
         """
-        if portfolio_name not in self._tickers_data:
+        rebalance_dates = self.get_portfolio_rebalance_dates(portfolio_name)
+        if not rebalance_dates:
             return False
         
-        portfolio_data = self._tickers_data[portfolio_name]
-        
-        # Check if it's new simplified format with any non-null weights
-        if isinstance(portfolio_data, dict) and all(isinstance(v, (int, float, type(None))) for v in portfolio_data.values()):
-            return any(weight is not None for weight in portfolio_data.values())
-        # Check if it's old format with weights key
-        elif isinstance(portfolio_data, dict) and 'weights' in portfolio_data:
-            return True
-        else:
-            return False
-
-    def get_start_date(self) -> str:
-        """
-        Get start date from YAML file
-        
-        Returns:
-            str: Start date in YYYY-MM-DD format
-        """
-        try:
-            with open(self.PATH_TO_VALIDATE["tickers_in_portfolio"], 'r', encoding='utf-8') as file:
-                data = yaml.safe_load(file)
-                start_date = data.get('start_date', '2015-01-01')
-                logger.info(f"Retrieved start date: {start_date}")
-                return start_date
-        except FileNotFoundError:
-            logger.error(f"File not found: {self.PATH_TO_VALIDATE['tickers_in_portfolio']}")
-            return '2015-01-01'
-        except yaml.YAMLError as e:
-            logger.error(f"Error parsing YAML file: {e}")
-            return '2015-01-01'
-        except Exception as e:
-            logger.error(f"Unexpected error loading start date: {e}")
-            return '2015-01-01'
+        # Используем первую дату ребалансировки
+        first_date = rebalance_dates[0]
+        return self.has_portfolio_weights_for_date(portfolio_name, first_date)

@@ -1,29 +1,81 @@
-start_date: "2015-01-01"
-
 portfolio_1:
-  'ROSN': null
-  'SBER': null
-  'GAZP': null
-  'SIBN': null
-  'TATN': null
-  'VTBR': null
-  'ALRS': null
-  'IRAO': null
-  'AFLT': null
-  'HYDR': null
-  'RTKM': null
-  'TRNFP': null
+  rebalance_date_1:
+    date: "2015-01-01"
+    tickers:
+      'ROSN': 0.12
+      'SBER': 0.15
+      'GAZP': 0.18
+      'SIBN': 0.08
+      'TATN': 0.10
+      'VTBR': 0.08
+      'ALRS': 0.06
+      'IRAO': 0.05
+      'AFLT': 0.04
+      'HYDR': 0.06
+      'RTKM': 0.05
+      'TRNFP': 0.03
+  
+  rebalance_date_2:
+    date: "2016-01-01"
+    tickers:
+      'ROSN': 0.10
+      'SBER': 0.18
+      'GAZP': 0.15
+      'SIBN': 0.10
+      'TATN': 0.12
+      'VTBR': 0.10
+      'ALRS': 0.08
+      'IRAO': 0.06
+      'AFLT': 0.05
+      'HYDR': 0.04
+      'RTKM': 0.02
+  
+  rebalance_date_3:
+    date: "2017-01-01"
+    tickers:
+      'ROSN': 0.08
+      'SBER': 0.20
+      'GAZP': 0.12
+      'SIBN': 0.12
+      'TATN': 0.15
+      'VTBR': 0.12
+      'ALRS': 0.10
+      'IRAO': 0.08
+      'AFLT': 0.03
 
 portfolio_2:
-  'YNDX': null
-  'OZON': null
-  'TCSG': null
-  'QIWI': null
-  'LKOH': null
-  'NVTK': null
-  'MAGN': null
-  'DSKY': null
-  'FIVE': null
-  'CHMF': null
-  'NLMK': null
-  'GMKN': null
+  rebalance_date_1:
+    date: "2015-01-01"
+    tickers:
+      'YNDX': 0.20
+      'OZON': 0.15
+      'TCSG': 0.12
+      'QIWI': 0.10
+      'LKOH': 0.15
+      'NVTK': 0.12
+      'MAGN': 0.08
+      'DSKY': 0.08
+  
+  rebalance_date_2:
+    date: "2016-07-01"
+    tickers:
+      'YNDX': 0.25
+      'OZON': 0.20
+      'TCSG': 0.10
+      'QIWI': 0.08
+      'LKOH': 0.12
+      'NVTK': 0.10
+      'MAGN': 0.08
+      'FIVE': 0.07
+  
+  rebalance_date_3:
+    date: "2017-01-01"
+    tickers:
+      'YNDX': 0.30
+      'OZON': 0.25
+      'TCSG': 0.08
+      'LKOH': 0.10
+      'NVTK': 0.08
+      'MAGN': 0.06
+      'FIVE': 0.08
+      'CHMF': 0.05
